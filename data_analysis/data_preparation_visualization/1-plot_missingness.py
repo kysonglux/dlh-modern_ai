@@ -7,7 +7,7 @@ import numpy as np
 
 def plot_missingness(df):
     """Visualize missing values in a DataFrame"""
-    
+
     plt.figure(figsize=(12, 8))
     missing = df.isna()
     rows_missing, cols_missing = np.where(missing)
@@ -16,12 +16,12 @@ def plot_missingness(df):
 
     y_value = [idx for idx in cols_missing]
     y_tick_labels = column_name
-    y_tick_positions = np.arrange(len(column_name))
+    y_tick_positions = np.arange(len(column_name))
 
     plt.scatter(rows_missing, y_value, marker='|')
     plt.yticks(y_tick_positions, y_tick_labels)
 
     plt.title("Missingness Plot")
-    plt.ylable("Column_name")
     plt.tight_layout()
     plt.show()
+    plt.savefig("1_plot")
