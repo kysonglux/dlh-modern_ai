@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """ data cleaning using Dropping, replacing, imputation """
 
-import pandas as pd
-
 
 def clean_total_charges(df, method='drop'):
     """data cleaning using Dropping, replacing, imputation """
