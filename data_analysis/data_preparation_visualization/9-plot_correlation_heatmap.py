@@ -9,7 +9,7 @@ def plot_correlation_heatmap(df):
     """visualizes correlations between continuous numeric features"""
     plt.figure(figsize=(6, 5))
 
-    numeric_df = df.select_dtypes(include=['number'])
+    numeric_df = df.select_dtypes(include=['int64', 'float64'])
     corr = numeric_df.corr()
 
     sns.heatmap(
