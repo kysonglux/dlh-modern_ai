@@ -20,15 +20,15 @@ def encode_features(df):
 
     '#2. Ordinal encode binary Yes/No columns'
     bi_cols = ["Partner", "Dependents", "PaperlessBilling", "SeniorCitizen"]
-    bi_oe = preprocessing.OrdinalEncoder(categories=[["No", "Yes"]], dtype=int)
+    bi_oe = preprocessing.OrdinalEncoder(categories=[["No", "Yes"]])
 
     for col in bi_cols:
-        df[col] = bi_oe.fit_transform(df[[col]])
+        df[col] = bi_oe.fit_transform(df[[col]]).astype(int)
 
     '#3. Ordinal encode TenureGroup(alphabetical order)'
     te_cats = sorted(df["TenureGroup"].unique())
-    tenure_oe = preprocessing.OrdinalEncoder(categories=[te_cats], dtype=int)
-    df["TenureGroup"] = tenure_oe.fit_transform(df[["TenureGroup"]])
+    tenure_oe = preprocessing.OrdinalEncoder(categories=[te_cats])
+    df["TenureGroup"] = tenure_oe.fit_transform(df[["TenureGroup"]]).astype(int)
 
     '#4.One-hot encode Contract and paymentMethod (drop first)'
     df = pd.get_dummies(
