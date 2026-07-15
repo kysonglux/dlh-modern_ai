@@ -34,4 +34,5 @@ def create_features(df):
     )
 
     df.drop(columns=service_cols, inplace=True)
+    df.drop(columns=["tenure"], inplace=True)
     return df
