@@ -24,7 +24,8 @@ def plot_categorical_distributions(df, columns_to_plot=None):
     axes = axes.flatten()
 
     for ax, col in zip(axes, columns_to_plot):
-        value_counts = df[col].value_counts()
+        caategories = df[col].dropna().unique()
+        counts = df[col].value_counts().reindex(categories, fill_value=0)
 
         positions = range(len(value_counts))
 
@@ -32,7 +33,7 @@ def plot_categorical_distributions(df, columns_to_plot=None):
         ax.set_title(col)
 
         ax.set_xticks(positions)
-        ax.set_xticklabels(value_counts.index, rotation=45, ha='right')
+        ax.set_xticklabels(categories, rotation=45, ha='right')
 
     for i in range(len(columns_to_plot), len(axes)):
         axes[i].axis('off')
