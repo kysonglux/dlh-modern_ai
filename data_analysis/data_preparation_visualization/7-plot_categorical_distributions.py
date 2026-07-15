@@ -21,20 +21,18 @@ def plot_categorical_distributions(df, columns_to_plot=None):
 
     axes = axes.flatten()
 
-    for ax, col in zip(axes, df.columns):
-        categories = df[col].dropna().unique()
-        counts = df[col].value_counts().reindex(categories, fill_value=0)
+    for i, col in enumerate(df.columns):
+        counts = df[col].value_counts()
+        x = counts.index.tolist()
+        y = counts.values
 
-        positions = range(len(categories))
+        axes[i].bar(x, y)
+        axes[i].set_title(col)
 
-        ax.bar(positions, counts.values)
-        ax.set_title(col)
+        axes[i].tick_params(axis="x", rotation=45)
 
-        ax.set_xticks(positions)
-        ax.set_xticklabels(categories, rotation=45, ha='right')
-
-    for i in range(total_columns, len(axes)):
-        axes[i].axis('off')
+    for j in range(total_columns, len(axes)):
+        axes[j].axis('off')
 
     plt.tight_layout()
     plt.savefig("Task_7.png")
