@@ -20,9 +20,10 @@ def encode_features(df):
 
     '#2. Ordinal encode binary Yes/No columns'
     bi_cols = ["Partner", "Dependents", "PaperlessBilling", "SeniorCitizen"]
-    cats = [["No", "Yes"]]*len(bi_cols)
+    cats = [["No", "Yes"]] * len(bi_cols)
     binary_oe = preprocessing.OrdinalEncoder(categories=cats)
     df[bi_cols] = binary_oe.fit_transform(df[bi_cols])
+    binary_oe.categories_ = [["No", "Yes"]]
 
     '#3. Ordinal encode TenureGroup(alphabetical order)'
     tenure_cats = sorted(df["TenureGroup"].unique())
