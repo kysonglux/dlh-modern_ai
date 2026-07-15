@@ -26,9 +26,11 @@ def encode_features(df):
         df[col] = bi_oe.fit_transform(df[[col]]).astype(int)
 
     '#3. Ordinal encode TenureGroup(alphabetical order)'
-    te_cats = sorted(df["TenureGroup"].unique())
-    tenure_oe = preprocessing.OrdinalEncoder(categories=[te_cats])
-    df["TenureGroup"] = tenure_oe.fit_transform(df[["TenureGroup"]]).astype(int)
+
+    tenure_oe = preprocessing.OrdinalEncoder()
+    sorted_tenure = sorted(df["TenureGroup"].unique())
+    tenure_oe.fit([[cat] for cat in sorted_tenure])
+    df["TenureGroup"] = tenure_oe.transform(df[["TenureGroup"]]).astype(int)
 
     '#4.One-hot encode Contract and paymentMethod (drop first)'
     df = pd.get_dummies(
