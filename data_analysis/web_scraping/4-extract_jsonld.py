@@ -33,9 +33,10 @@ def extract_jsonld(url):
                     tags = [t.strip() for t in raw.split(",") if t.strip()]
                 else:
                     tags = raw
+
                 all.append({
                     "text": text,
                     "author": author,
-                    "tag": tags
+                    "tags": tags
                 })
-        return all
+    return all
