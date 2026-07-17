@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
-""" open a static paroduct category page and returns a list of dictionaries"""
+""" open a static paroduct category page and returns dictionaries"""
 
 import time
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 
 
 def scrape_products(url):
-    """ open a static paroduct category page and returns a list of dictionaries"""
+    """ open a static paroduct category page and returns dictionaries"""
 
-    options = Options()
+    options = webdriver.ChromeOptions()
     options.add_argument("--headless")
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--no-sandbox")
@@ -21,19 +20,22 @@ def scrape_products(url):
 
     products = []
 
-    items = driver.find_elements(By.CSS_SELECTOR, ".product, .item, .thumbnail, div")
+    items = driver.find_elements("css selector", "div.thumbnail")
 
     for item in items:
         try:
-            a_tag = item.find_element(By.CSS_SELECTOR, "a[title]")
-            title = a_tag.get_attribute("title")
+            title = item.find_element(
+                "css selector", "a.title"
+                ).get_attribute("title")
 
-            price = item.find_element(By.CSS_SELECTOR, "h4.price").text.strip()
+            price = item.find_element("css selector", "h4.price").text
 
-            description = item.find_element(By.CSS_SELECTOR, "p.description").text.strip()
+            description = item.find_element(
+                "css selector", "p.description").text
 
-            rating_block = item.find_element(By.CSS_SELECTOR, ".ratings p[data-rating]")
-            rating = rating_block.get_attribute("data-rating")
+            rating = int(item.find_element(
+                "css selector", ".ratings p[data-rating]"
+                ).get_attribute("data-rating"))
 
             products.append({
                 "title": title,
@@ -46,4 +48,4 @@ def scrape_products(url):
             continue
 
     driver.quit()
-    return products 
+    return products
