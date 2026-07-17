@@ -12,8 +12,10 @@ def login_and_scrape(login_url, user, pwd):
     html = session.get(login_url)
     soup = BeautifulSoup(html.text, "html.parser")
 
-    csrf = soup.find("input", {"name": "crsf_token"})
-    csrf_token = csrf.get("value") if csrf else ""
+    try:
+        csrf_token = soup.find("input", {"name": "csrf_token"})["value"]
+    except Exception as e:
+        print(e)
 
     payload = {
         "username": user,
