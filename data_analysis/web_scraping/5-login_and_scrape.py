@@ -17,7 +17,7 @@ def login_and_scrape(login_url, user, pwd):
     try:
         csrf_token = soup.find("input", {"name": "csrf_token"})["value"]
     except Exception as e:
-        print(e)
+        print(e, end="")
 
     payload = {
         "username": user,
