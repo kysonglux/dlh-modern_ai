@@ -1,1 +1,65 @@
 #!/usr/bin/env python3
+""" scrolls and extracts all products from js-rendered page"""
+import time
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+
+
+def scroll_and_scrape(url, scroll_pause=2.0):
+    """scrolls and extracts all products """
+    options = Options()
+    options.add_argument("--headless=new")
+
+    driver = webdriver.Chrome(options=options)
+
+    try:
+        driver.get(url)
+
+        # Scroll until page height no longer increases
+        last_height = driver.execute_script("return document.body.scrollHeight")
+
+        while True:
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(scroll_pause)
+
+            new_height = driver.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
+        products = []
+        seen = set()
+
+        cards = driver.find_elements(By.CSS_SELECTOR, "div.thumbnail")
+
+        for card in cards:
+            try:
+                title = card.find_element(By.CSS_SELECTOR, "a.title").get_attribute("title").strip()
+                price = card.find_element(By.CSS_SELECTOR, "h4.price").text.strip()
+                description = card.find_element(By.CSS_SELECTOR, "p.description").text.strip()
+                rating = len(
+                    card.find_elements(
+                        By.CSS_SELECTOR,
+                        ".ratings p.ws-icon.ws-icon-star"
+                    )
+                )
+
+                key = (title, price)
+                if key not in seen:
+                    seen.add(key)
+                    products.append({
+                        "title": title,
+                        "price": price,
+                        "description": description,
+                        "rating": rating
+                    })
+
+            except Exception:
+                # Skip malformed product cards
+                continue
+
+        return products
+
+    finally:
+        driver.quit()
