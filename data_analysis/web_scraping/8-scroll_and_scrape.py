@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-""" scrolls and extracts all products from js-rendered page"""
+"""scrolls and extracts all products from a JS‐rendered infinite‐scroll page"""
+
 import time
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
 
 
 def scroll_and_scrape(url, scroll_pause=2.0):
-    """scrolls and extracts all products """
-    options = Options()
+    """scrolls and extracts all products"""
+
+    options = webdriver.ChromeOptions()
     options.add_argument("--headless=new")
 
     driver = webdriver.Chrome(options=options)
@@ -17,13 +17,16 @@ def scroll_and_scrape(url, scroll_pause=2.0):
         driver.get(url)
 
         # Scroll until page height no longer increases
-        last_height = driver.execute_script("return document.body.scrollHeight")
+        last_height = driver.execute_script(
+            "return document.body.scrollHeight")
 
         while True:
-            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            driver.execute_script(
+                "window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(scroll_pause)
 
-            new_height = driver.execute_script("return document.body.scrollHeight")
+            new_height = driver.execute_script(
+                "return document.body.scrollHeight")
             if new_height == last_height:
                 break
             last_height = new_height
@@ -31,17 +34,20 @@ def scroll_and_scrape(url, scroll_pause=2.0):
         products = []
         seen = set()
 
-        cards = driver.find_elements(By.CSS_SELECTOR, "div.thumbnail")
+        cards = driver.find_elements("css selector", "div.thumbnail")
 
         for card in cards:
             try:
-                title = card.find_element(By.CSS_SELECTOR, "a.title").get_attribute("title").strip()
-                price = card.find_element(By.CSS_SELECTOR, "h4.price").text.strip()
-                description = card.find_element(By.CSS_SELECTOR, "p.description").text.strip()
+                title = card.find_element(
+                    "css selector", "a.title").get_attribute("title").strip()
+                price = card.find_element(
+                    "css selector", "h4.price").text.strip()
+                description = card.find_element(
+                    "css selector", "p.description").text.strip()
                 rating = len(
                     card.find_elements(
-                        By.CSS_SELECTOR,
-                        ".ratings p.ws-icon.ws-icon-star"
+                        "css selector",
+                        ".ratings .ws-icon.ws-icon-star"
                     )
                 )
 
