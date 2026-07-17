@@ -25,6 +25,8 @@ def scroll_and_scrape(url, scroll_pause=2.0):
         last_height = driver.execute_script(
             "return document.body.scrollHeight")
 
+        last_count = 0
+
         while True:
             driver.execute_script(
                 "window.scrollTo(0, document.body.scrollHeight);")
@@ -32,9 +34,11 @@ def scroll_and_scrape(url, scroll_pause=2.0):
 
             new_height = driver.execute_script(
                 "return document.body.scrollHeight")
-            if new_height == last_height:
+            count = len(driver.find_elements("css selector", "div.thumbnail"))
+            if new_height == last_height and count == last_count:
                 break
             last_height = new_height
+            last_count = count
 
         products = []
         seen = set()
