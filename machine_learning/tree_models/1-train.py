@@ -5,3 +5,4 @@
 def train_tree(clf, X, y):
     """train a tree based classifier using scikit-learn"""
     clf.fit(X, y)
+    return clf
