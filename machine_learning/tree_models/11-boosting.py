@@ -25,7 +25,6 @@ def compare_boosting_classifiers(name, n_estimators, random_state):
             n_estimators=n_estimators,
             random_state=random_state,
             use_label_encoder=False,
-            eval_metric="logloss"
         )
 
     elif name == "lightgbm":
