@@ -13,4 +13,4 @@ def predict(model, X, verbose=0):
         verbose (int): Verbosity mode. 0 = silent, 1 = progress bar.
     """
     predictions = model.predict(X, verbose=verbose)
-    return tf.argmax(predictions, axis=1).numpy().tolist()
+    return tf.argmax(predictions, axis=1)
