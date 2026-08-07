@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """train a keras model"""
 
-from tensorflow import keras
-
 
 def train_model(model, X, Y, epochs, verbose=1):
     """Train a model using mini-batch gradient descent.
