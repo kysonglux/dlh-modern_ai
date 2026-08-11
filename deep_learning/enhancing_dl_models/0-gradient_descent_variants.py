@@ -9,7 +9,7 @@ def train_with_gradient_descent_variant(variant,
     """returns the optimizer and batch size based
     on the gradient descent variant specified"""
     if variant == "batch":
-        optimizer = keras.optimizers.Adam(learning_rate=learning_rate)
+        optimizer = keras.optimizers.SGD(learning_rate=learning_rate)
         bs = x_train.shape[0]
         return optimizer, bs
     elif variant == "stochastic":
@@ -17,7 +17,7 @@ def train_with_gradient_descent_variant(variant,
         bs = 1
         return optimizer, bs
     elif variant == "mini_batch":
-        optimizer = keras.optimizers.Adam(learning_rate=learning_rate)
+        optimizer = keras.optimizers.SGD(learning_rate=learning_rate)
         bs = batch_size
         return optimizer, bs
     else:
