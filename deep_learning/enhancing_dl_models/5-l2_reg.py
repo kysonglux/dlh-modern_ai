@@ -2,6 +2,7 @@
 """create a keras model with l2 regularization"""
 from tensorflow import keras
 
+
 def build_model_with_L2_regularization(input_dim,
                                        hidden_units, n_layers, lambda_l2):
     """build a keras model with l2 regularization
