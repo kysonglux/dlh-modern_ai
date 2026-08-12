@@ -19,9 +19,9 @@ def build_model_initializer_by_activation(input_dim, hidden_units, activation):
         raise ValueError("Invalid activation function")
 
     model = keras.Sequential([
-        keras.layers.Dense(hidden_units, activation=activation,
-                           kernel_initializer=initializer,
-                           input_shape=(input_dim,)),
+        keras.layers.Dense(hidden_units,
+                           activation=activation,
+                           kernel_initializer=initializer,),
         keras.layers.Dense(10, activation='softmax')
     ])
 
