@@ -7,41 +7,26 @@ from tensorflow import keras
 def build_model_initializer_by_activation(input_dim, hidden_units, activation):
     """returns a compiled keras model
     based on the specified weight initialization method"""
-    if activation == "sigmoid":
+    if activation in ("sigmoid", "tanh"):
         initializer = keras.initializers.GlorotUniform()
-        activation_fn = "sigmoid"
-
-    elif activation == "tanh":
-        initializer = keras.initializers.GlorotUniform()
-        activation_fn = "tanh"
-
-    elif activation == "relu":
+    elif activation in ("relu", "leaky_relu"):
         initializer = keras.initializers.HeNormal()
-        activation_fn = "relu"
-
-    elif activation == "leaky_relu":
-        initializer = keras.initializers.HeNormal()
-        activation_fn = keras.layers.LeakyReLU()
-
     else:
         raise ValueError("Invalid activation function")
 
     model = keras.Sequential([
-        keras.layers.Input(shape=(input_dim,)),
         keras.layers.Dense(
             hidden_units,
-            activation=activation_fn,
-            kernel_initializer=initializer
-        ),
-        keras.layers.Dense(
-            hidden_units,
-            activation=activation_fn,
-            kernel_initializer=initializer
-        ),
-        keras.layers.Dense(
-            10,
-            activation="softmax"
+            kernel_initializer=initializer,
+            input_shape=(input_dim,)
         )
     ])
+
+    if activation == "leaky_relu":
+        model.add(keras.layers.LeakyReLU())
+    else:
+        model.add(keras.layers.Activation(activation))
+
+    model.add(keras.layers.Dense(10, activation="softmax"))
 
     return model
