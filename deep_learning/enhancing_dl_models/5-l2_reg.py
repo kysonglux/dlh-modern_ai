@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """create a keras model with l2 regularization"""
-
+from tensorflow import keras
 
 def build_model_with_L2_regularization(input_dim,
                                        hidden_units, n_layers, lambda_l2):
@@ -15,8 +15,6 @@ def build_model_with_L2_regularization(input_dim,
     Returns:
         keras.Model: the keras model
     """
-    from tensorflow import keras
-
     model = keras.Sequential()
     model.add(keras.layers.InputLayer(input_shape=(input_dim,)))
 
