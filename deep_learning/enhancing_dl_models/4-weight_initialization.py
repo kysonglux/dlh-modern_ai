@@ -8,9 +8,9 @@ def build_model_initializer_by_activation(input_dim, hidden_units, activation):
     """returns a compiled keras model
     based on the specified weight initialization method"""
     if activation == "sigmoid":
-        initializer = keras.initializers.RandomNormal(mean=0.0, stddev=0.05)
+        initializer = keras.initializers.GlorotUniform()
     elif activation == "tanh":
-        initializer = keras.initializers.GlorotNormal()
+        initializer = keras.initializers.GlorotUniform()
     elif activation == "relu":
         initializer = keras.initializers.HeNormal()
     elif activation == "leaky_relu":
