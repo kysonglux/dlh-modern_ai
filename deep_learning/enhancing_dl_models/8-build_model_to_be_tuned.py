@@ -1,4 +1,4 @@
-#! /user/bin/env python3
+#!/usr/bin/env python3
 """create a Keras model for multi-class classification"""
 from tensorflow import keras
 
