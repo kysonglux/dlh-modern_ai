@@ -9,5 +9,6 @@ def get_early_stopping_callback(patience, monitor='val_loss', verbose=1):
     return keras.callbacks.EarlyStopping(
         patience=patience,
         monitor=monitor,
-        verbose=verbose
+        verbose=verbose,
+        restore_best_weights=True
     )
