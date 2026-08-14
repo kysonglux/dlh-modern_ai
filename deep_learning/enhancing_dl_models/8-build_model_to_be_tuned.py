@@ -8,19 +8,18 @@ def build_model(hp):
 
     model = keras.Sequential()
     model.add(keras.layers.Input(shape=(784,)))
-    model.add(keras.layers.Dense(
-        units=hp.Int('units', min_value=4, max_value=12, step=4),
-        activation=hp.Choice('activation', values=['relu', 'sigmoid'])))
+    num_layers = hp.Int('num_layers', min_value=1, max_value=2, step=1)
+    units = hp.Int('units', min_value=4, max_value=12, step=4)
+    activation = hp.Choice('activation', values=['relu', 'sigmoid'])
 
-    for i in range(hp.Int('num_layers', 1, 2)):
-        model.add(keras.layers.Dense(
-            units=hp.Int('units', min_value=4, max_value=12, step=4),
-            activation=hp.Choice('activation', values=['relu', 'sigmoid'])))
-
+    model.add(keras.layers.Dense(units=units, activation=activation))
+    for _ in range(num_layers - 1):
+        model.add(keras.layers.Dense(units=units, activation=activation))
     model.add(keras.layers.Dense(10, activation='softmax'))
+    learning_rate = hp.Choice('learning_rate', values=[1e-2, 1e-3])
     model.compile(
-        optimizer=keras.optimizers.Adam(
-            hp.Choice('learning_rate', values=[1e-2, 1e-3])),
+        optimizer=keras.optimizers.Adam(learning_rate),
+        loss='categorical_crossentropy',
         metrics=['accuracy']
     )
     return model
