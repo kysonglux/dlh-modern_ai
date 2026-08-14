@@ -1,4 +1,4 @@
-#! /user/bin/env python3
+#!/usr/bin/env python3
 """initialize a keras Tuner for hyperparameter tuning"""
 import keras_tuner as kt
 
