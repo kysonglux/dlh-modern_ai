@@ -7,12 +7,15 @@ def initiate_tuner(tuner_type, build_model, seed,
                    hyperband_iterations, max_trials,
                    objective="val_accuracy"):
     """initialize a keras Tuner for hyperparameter tuning"""
+
     if tuner_type == 'Hyperband':
         tuner = kt.Hyperband(
             build_model,
             objective=objective,
-            max_epochs=hyperband_iterations,
+            max_epochs=10,
             factor=3,
+            hyperband_iterations=hyperband_iterations,
+            seed=seed,
             directory='my_dir',
             project_name='helloworld',
             overwrite=True
@@ -22,6 +25,7 @@ def initiate_tuner(tuner_type, build_model, seed,
             build_model,
             objective=objective,
             max_trials=max_trials,
+            seed=seed,
             directory='my_dir',
             project_name='helloworld',
             overwrite=True
@@ -31,6 +35,7 @@ def initiate_tuner(tuner_type, build_model, seed,
             build_model,
             objective=objective,
             max_trials=max_trials,
+            seed=seed,
             directory='my_dir',
             project_name='helloworld',
             overwrite=True
