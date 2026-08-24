@@ -20,21 +20,27 @@ def create_cnn_model(input_shape, filters, kernel_sizes, activations,
     if pooling_type not in ['max', 'avg']:
         raise ValueError("pooling_type must be 'max' or 'avg'")
 
-    inputs = keras.Input(shape=input_shape)
-    x = inputs
+    model = keras.Sequential()
+    model.add(keras.layers.Conv2D(filters=filters[0],
+                                  kernel_size=kernel_sizes[0],
+                                  activation=activations[0],
+                                  padding='valid',
+                                  input_shape=input_shape))
 
-    for i in range(len(filters)):
-        x = keras.layers.Conv2D(filters=filters[i],
-                                kernel_size=kernel_sizes[i],
-                                activation=activations[i],
-                                padding='valid')(x)
-        if pooling_type == 'max':
-            x = keras.layers.MaxPooling2D(pool_size=(2, 2))(x)
-        else:
-            x = keras.layers.AveragePooling2D(pool_size=(2, 2))(x)
+    if pooling_type == 'max':
+        model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+    else:
+        model.add(keras.layers.AveragePooling2D(pool_size=(2, 2)))
 
-    x = keras.layers.Flatten()(x)
-    outputs = keras.layers.Dense(units=10, activation='softmax')(x)
+    model.add(keras.layers.Conv2D(filters=filters[1],
+                                  kernel_size=kernel_sizes[1],
+                                  activation=activations[1],
+                                  padding='valid'))
+    if pooling_type == 'max':
+        model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+    else:
+        model.add(keras.layers.AveragePooling2D(pool_size=(2, 2)))
+    model.add(keras.layers.Flatten())
+    model.add(keras.layers.Dense(units=10, activation='softmax'))
 
-    model = keras.Model(inputs=inputs, outputs=outputs)
     return model
