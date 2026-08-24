@@ -21,11 +21,11 @@ def create_cnn_model(input_shape, filters, kernel_sizes, activations,
         raise ValueError("pooling_type must be 'max' or 'avg'")
 
     model = keras.Sequential()
+    model.add(keras.Input(shape=input_shape))
     model.add(keras.layers.Conv2D(filters=filters[0],
                                   kernel_size=kernel_sizes[0],
                                   activation=activations[0],
-                                  padding='valid',
-                                  input_shape=input_shape))
+                                  padding='valid'))
 
     if pooling_type == 'max':
         model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
