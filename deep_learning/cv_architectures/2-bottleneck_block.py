@@ -52,6 +52,15 @@ def bottleneck_block(x, filters, stride=1, downsample=False,
     )(out)
     out = keras.layers.BatchNormalization(axis=3, name=f"{name}_bn3")(out)
 
+    if downsample or shortcut.shape[-1] != F3:
+        shortcut = keras.layers.Conv2D(
+            F3, 1, strides=stride, padding="valid",
+            kernel_initializer="he_normal", use_bias=False,
+            name=f"{name}_shortcut_conv"
+        )(shortcut)
+        shortcut = keras.layers.BatchNormalization(
+            axis=3, name=f"{name}_shortcut_bn"
+        )(shortcut)
     # Shortcut (identity)
     out = keras.layers.Add(name=f"{name}_add")([out, shortcut])
     out = keras.layers.Activation("relu", name=f"{name}_out")(out)
