@@ -21,9 +21,9 @@ def bottleneck_block(x, filters, stride=1, downsample=False,
         The activated output of the bottleneck block
     """
 
-    F1 = 16
-    F2 = 16
-    F3 = 64
+    F1 = filters
+    F2 = filters
+    F3 = filters * 4
 
     shortcut = x
 
