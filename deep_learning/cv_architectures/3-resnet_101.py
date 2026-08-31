@@ -4,6 +4,54 @@ Deep Residual Learning for Image Recognition (2015)"""
 from tensorflow import keras
 
 
+def bottleneck_block(x, filters, stride=1, downsample=False, name=None):
+    """builds a bottleneck block"""
+    shortcut = x
+
+    # 1x1 reduce
+    x = keras.layers.Conv2D(filters, 1, strides=stride,
+                            kernel_initializer="he_normal",
+                            name=f"{name}_conv1")(x)
+    x = keras.layers.BatchNormalization(axis=3, name=f"{name}_bn1")(x)
+    x = keras.layers.Activation("relu", name=f"{name}_relu1")(x)
+
+    # 3x3 conv
+    x = keras.layers.Conv2D(filters, 3, padding="same",
+                            kernel_initializer="he_normal",
+                            name=f"{name}_conv2")(x)
+    x = keras.layers.BatchNormalization(axis=3, name=f"{name}_bn2")(x)
+    x = keras.layers.Activation("relu", name=f"{name}_relu2")(x)
+
+    # 1x1 expand
+    x = keras.layers.Conv2D(filters * 4, 1,
+                            kernel_initializer="he_normal",
+                            name=f"{name}_conv3")(x)
+    x = keras.layers.BatchNormalization(axis=3, name=f"{name}_bn3")(x)
+
+    if downsample:
+        shortcut = keras.layers.Conv2D(filters * 4, 1, strides=stride,
+                                       kernel_initializer="he_normal",
+                                       name=f"{name}_proj_conv")(shortcut)
+        shortcut = keras.layers.BatchNormalization(
+            axis=3, name=f"{name}_proj_bn")(shortcut)
+
+    # Add
+    x = keras.layers.Add(name=f"{name}_add")([x, shortcut])
+    x = keras.layers.Activation("relu", name=f"{name}_out")(x)
+
+    return x
+
+
+def make_layer(x, blocks, filters, stride=1, name=None):
+    """builds a layer of bottleneck blocks"""
+    x = bottleneck_block(x, filters, stride=stride, downsample=True,
+                         name=f'{name}_block1')
+    for i in range(1, blocks):
+        x = bottleneck_block(x, filters, stride=1, downsample=False,
+                             name=f'{name}_block{i+1}')
+    return x
+
+
 def build_resnet101(input_shape=(224, 224, 3), num_classes=1000):
     """builds a ResNet-101 architecture"""
 
@@ -35,50 +83,3 @@ def build_resnet101(input_shape=(224, 224, 3), num_classes=1000):
                                  kernel_initializer="he_normal",
                                  name="fc1000")(x)
     return keras.Model(inputs=inputs, outputs=outputs, name="ResNet101")
-
-
-def bottleneck_block(x, filters, stride=1, downsample=False, name=None):
-    shortcut = x
-
-    # 1x1 reduce
-    x = keras.layers.Conv2D(filters, 1, strides=stride,
-                            kernel_initializer="he_normal",
-                            name=f"{name}_conv1")(x)
-    x = keras.layers.BatchNormalization(axis=3, name=f"{name}_bn1")(x)
-    x = keras.layers.Activation("relu", name=f"{name}_relu1")(x)
-
-    # 3x3 conv
-    x = keras.layers.Conv2D(filters, 3, padding="same",
-                            kernel_initializer="he_normal",
-                            name=f"{name}_conv2")(x)
-    x = keras.layers.BatchNormalization(axis=3, name=f"{name}_bn2")(x)
-    x = keras.layers.Activation("relu", name=f"{name}_relu2")(x)
-
-    # 1x1 expand
-    x = keras.layers.Conv2D(filters * 4, 1,
-                            kernel_initializer="he_normal",
-                            name=f"{name}_conv3")(x)
-    x = keras.layers.BatchNormalization(axis=3, name=f"{name}_bn3")(x)
-
-    # 🔥 FIX: projection shortcut when downsampling or channel mismatch
-    if downsample:
-        shortcut = keras.layers.Conv2D(filters * 4, 1, strides=stride,
-                                       kernel_initializer="he_normal",
-                                       name=f"{name}_proj_conv")(shortcut)
-        shortcut = keras.layers.BatchNormalization(
-            axis=3, name=f"{name}_proj_bn")(shortcut)
-
-    # Add
-    x = keras.layers.Add(name=f"{name}_add")([x, shortcut])
-    x = keras.layers.Activation("relu", name=f"{name}_out")(x)
-
-    return x
-
-
-def make_layer(x, blocks, filters, stride=1, name=None):
-    x = bottleneck_block(x, filters, stride=stride, downsample=True,
-                         name=f'{name}_block1')
-    for i in range(1, blocks):
-        x = bottleneck_block(x, filters, stride=1, downsample=False,
-                             name=f'{name}_block{i+1}')
-    return x
