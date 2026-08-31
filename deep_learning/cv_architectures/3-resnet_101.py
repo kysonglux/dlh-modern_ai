@@ -9,7 +9,7 @@ def bottleneck_block(x, filters, stride=1, downsample=False, name=None):
     shortcut = x
 
     # 1x1 reduce
-    x = keras.layers.Conv2D(filters, 1, strides=stride,
+    x = keras.layers.Conv2D(filters, 1, strides=stride, padding="valid",
                             kernel_initializer="he_normal",
                             name=f"{name}_conv1")(x)
     x = keras.layers.BatchNormalization(axis=3, name=f"{name}_bn1")(x)
