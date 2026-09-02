@@ -54,7 +54,7 @@ def bottleneck_block(x, filters, stride=1, downsample=False,
 
     if downsample or shortcut.shape[-1] != F3:
         shortcut = keras.layers.Conv2D(
-            F3, 1, strides=stride, padding="valid",
+            F3, 1, strides=1, padding="valid",
             kernel_initializer="he_normal", use_bias=False,
             name=f"{name}_shortcut_conv"
         )(shortcut)

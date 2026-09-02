@@ -5,46 +5,6 @@ from tensorflow import keras
 bottleneck_block = __import__('2-bottleneck_block').bottleneck_block
 
 
-# FIX: override imported bottleneck_block with correct version
-def bottleneck_block(x, filters, stride=1, downsample=False, name=None):
-    """correct the incompatible shape.(56, 56, 512) and (28, 28, 512)"""
-    shortcut = x
-
-    # 1x1 reduce
-    x = keras.layers.Conv2D(filters, 1, strides=stride,
-                            kernel_initializer="he_normal",
-                            name=f"{name}_conv1")(x)
-    x = keras.layers.BatchNormalization(axis=3, name=f"{name}_bn1")(x)
-    x = keras.layers.Activation("relu", name=f"{name}_relu1")(x)
-
-    # 3x3 conv
-    x = keras.layers.Conv2D(filters, 3, padding="same",
-                            kernel_initializer="he_normal",
-                            name=f"{name}_conv2")(x)
-    x = keras.layers.BatchNormalization(axis=3, name=f"{name}_bn2")(x)
-    x = keras.layers.Activation("relu", name=f"{name}_relu2")(x)
-
-    # 1x1 expand
-    x = keras.layers.Conv2D(filters * 4, 1,
-                            kernel_initializer="he_normal",
-                            name=f"{name}_conv3")(x)
-    x = keras.layers.BatchNormalization(axis=3, name=f"{name}_bn3")(x)
-
-    # 🔥 FIX: projection shortcut MUST downsample
-    if downsample:
-        shortcut = keras.layers.Conv2D(filters * 4, 1, strides=stride,
-                                       kernel_initializer="he_normal",
-                                       name=f"{name}_proj_conv")(shortcut)
-        shortcut = keras.layers.BatchNormalization(
-            axis=3, name=f"{name}_proj_bn")(shortcut)
-
-    # Add
-    x = keras.layers.Add(name=f"{name}_add")([x, shortcut])
-    x = keras.layers.Activation("relu", name=f"{name}_out")(x)
-
-    return x
-
-
 def make_layer(x, blocks, filters, stride=1, name=None):
     """builds a layer of bottleneck blocks"""
     x = bottleneck_block(x, filters, stride=stride, downsample=True,
