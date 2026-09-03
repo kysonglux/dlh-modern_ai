@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """unfreezes the last N layers of the base model"""
-from tensorflow import keras
 
 
 def unfreeze_top_layers(model, n_layers):
