@@ -1,0 +1,6 @@
+path: datasets/detection/
+train: images/train
+val: images/val
+
+nc: 3
+names: ["person", "car", "bicycle"]
