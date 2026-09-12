@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""prepare VOC2012 dataset for YOLOv8 training."""
 import os
 import shutil
 import xml.etree.ElementTree as ET

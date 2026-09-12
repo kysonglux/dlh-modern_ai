@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""YOLO-compatible augmentation using Albumentations."""
 import albumentations as A
 import numpy as np
 
@@ -22,7 +23,7 @@ def basic_aug(image, bboxes, labels):
             A.RandomBrightnessContrast(p=0.2),
             A.Affine(
                 translate_percent=0.1,
-                scale=1.0 + 0.1,   # scale 0.1 means ±10%
+                scale=0.1,   # scale 0.1 means ±10%
                 rotate=(-30, 0),
                 p=0.5
             ),
