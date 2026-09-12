@@ -2,6 +2,7 @@
 """YOLO-compatible augmentation using Albumentations."""
 import albumentations as A
 import numpy as np
+import cv2
 
 
 def basic_aug(image, bboxes, labels):
@@ -26,7 +27,7 @@ def basic_aug(image, bboxes, labels):
                 scale=0.1,   # scale 0.1 means ±10%
                 rotate=(-30, 0),
                 cval=0,
-                mode=0,
+                border_mode=cv2.BORDER_CONSTANT,
                 p=0.5
             ),
         ],
