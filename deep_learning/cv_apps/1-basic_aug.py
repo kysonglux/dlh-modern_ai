@@ -20,21 +20,12 @@ def basic_aug(image, bboxes, labels):
 
     transform = A.Compose(
         [
-            A.PadIfNeeded(
-                min_height=image.shape[0],
-                min_width=image.shape[1],
-                border_mode=cv2.BORDER_CONSTANT,
-                fill=0,
-                p=1.0
-            ),
             A.HorizontalFlip(p=0.5),
             A.RandomBrightnessContrast(p=0.2),
             A.Affine(
                 translate_percent=0.1,
-                scale=0.1,   # scale 0.1 means ±10%
+                scale=(0.9, 1.1),   # scale 0.1 means ±10%
                 rotate=(-30, 0),
-                fit_output=False,
-                interpolation=cv2.INTER_NEAREST,
                 p=0.5
             ),
         ],
