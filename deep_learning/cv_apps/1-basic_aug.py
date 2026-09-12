@@ -3,7 +3,6 @@
 import albumentations as A
 import numpy as np
 import cv2
-import random
 
 
 def basic_aug(image, bboxes, labels):
@@ -18,8 +17,6 @@ def basic_aug(image, bboxes, labels):
         aug_bboxes (np.ndarray): Augmented bboxes (VOC format)
         aug_labels (List[int]): Labels (unchanged)
     """
-    random.seed(42)  # For reproducibility
-    np.random.seed(42)
 
     transform = A.Compose(
         [
@@ -46,7 +43,7 @@ def basic_aug(image, bboxes, labels):
             label_fields=["labels"],
             min_visibility=0.0
         ),
-        seed=42
+        seed=42,
     )
 
     augmented = transform(image=image, bboxes=bboxes, labels=labels)
