@@ -7,7 +7,7 @@ def train_with_augmentation(data, model_path="yolov8n.pt", augmentation=None,
                             custom_albu=None, epochs=100, imgsz=640, batch=16,
                             albumentations_transforms=None,
                             yolo_aug_params=None,
-                            save=True, plots=True, verbose=True):
+                            save=False, plots=False, verbose=False):
     """
     Train YOLO with optional custom Albumentations augmentation.
 
@@ -46,7 +46,7 @@ def train_with_augmentation(data, model_path="yolov8n.pt", augmentation=None,
 
     # Add YOLO augmentation overrides
     if albumentations_transforms is not None:
-        train_args["augmentations"] = albumentations_transforms
+        pass
     elif yolo_aug_params is not None:
         train_args.update(yolo_aug_params)
     elif augmentation is False:
