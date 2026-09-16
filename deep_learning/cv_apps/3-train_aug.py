@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Train YOLOv8 with optional custom Albumentations augmentation."""
-import albumentations as A
 from ultralytics import YOLO
 
 
@@ -46,10 +45,11 @@ def train_with_augmentation(data, model_path="yolov8n.pt", aug=None,
     }
 
     # Add YOLO augmentation overrides
-    if yolo_aug_params:
+    if albumentations_transforms is not None:
+        train_args["albumentations"] = albumentations_transforms
+    elif yolo_aug_params is not None:
         train_args.update(yolo_aug_params)
-
-    if not aug:
+    elif aug is False:
         train_args.update({"hsv_h": 0.0, "hsv_s": 0.0, "hsv_v": 0.0,
                            "degrees": 0.0, "translate": 0.0, "scale": 0.0,
                            "shear": 0.0, "perspective": 0.0, "flipud": 0.0,
