@@ -46,7 +46,7 @@ def train_with_augmentation(data, model_path="yolov8n.pt", augmentation=None,
 
     # Add YOLO augmentation overrides
     if albumentations_transforms is not None:
-        pass
+        train_args["augmentations"] = albumentations_transforms
     elif yolo_aug_params is not None:
         train_args.update(yolo_aug_params)
     elif augmentation is False:
