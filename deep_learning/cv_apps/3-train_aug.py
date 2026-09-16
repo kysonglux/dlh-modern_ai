@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 """Train YOLOv8 with optional custom Albumentations augmentation."""
-import albumentations as A
-import numpy as np
 from ultralytics import YOLO
 
 
