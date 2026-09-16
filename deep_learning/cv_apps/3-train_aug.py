@@ -3,8 +3,8 @@
 from ultralytics import YOLO
 
 
-def train_with_augmentation(data, model_path="yolov8n.pt", aug=None,
-                            custom_albu=None, epochs=50, imgsz=640, batch=16,
+def train_with_augmentation(data, model_path="yolov8n.pt", augmentation=None,
+                            custom_albu=None, epochs=100, imgsz=640, batch=16,
                             albumentations_transforms=None,
                             yolo_aug_params=None,
                             save=True, plots=True, verbose=True):
@@ -49,11 +49,11 @@ def train_with_augmentation(data, model_path="yolov8n.pt", aug=None,
         train_args["albumentations"] = albumentations_transforms
     elif yolo_aug_params is not None:
         train_args.update(yolo_aug_params)
-    elif aug is False:
+    elif augmentation is False:
         train_args.update({"hsv_h": 0.0, "hsv_s": 0.0, "hsv_v": 0.0,
                            "degrees": 0.0, "translate": 0.0, "scale": 0.0,
                            "shear": 0.0, "perspective": 0.0, "flipud": 0.0,
-                           "fliplr": 0.0, "bgr": 0.0,
+                           "fliplr": 0.0, "bgr": 0.0, "cutmix": 0.0,
                            "mosaic": 0.0, "mixup": 0.0, "copy_paste": 0.0,
                            "erasing": 0.0, "auto_augment": None})
 
