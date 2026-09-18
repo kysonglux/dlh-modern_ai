@@ -112,10 +112,12 @@ def process_split(split_name, image_list):
                 (w_img, h_img), (xmin, ymin, xmax, ymax)
             )
 
-            yolo_lines.append(
-                f"{CLASS_TO_ID[cls]}"
-                f"{x_center:.6f}{y_center:.6f} {w:.6f} {h:.6f}"
-            )
+            yolo_lines_elements = [
+                str(CLASS_TO_ID[cls]),
+                f"{x_center:.6f}", f"{y_center:.6f}",
+                f"{w:.6f}", f"{h:.6f}"
+            ]
+            yolo_lines.append(" ".join(yolo_lines_elements))
 
         if len(yolo_lines) == 0:
             continue
