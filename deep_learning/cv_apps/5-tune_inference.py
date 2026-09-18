@@ -37,7 +37,7 @@ def tune_inference(data_yaml, model_path,
         for iou in iou_list:
 
             metrics = model.val(
-                data=data_yaml,                 # use model's internal data config
+                data=data_yaml,
                 imgsz=imgsz,
                 conf=conf,
                 iou=iou,
