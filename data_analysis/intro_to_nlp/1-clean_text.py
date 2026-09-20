@@ -16,10 +16,10 @@ _DATASET_PLACEHOLDER_MAP = {
 def normalize_unicode_punct(text):
     """Replace curly quotes, dashes, ellipses, etc. with ASCII equivalents."""
     replacements = {
-        r"[''‚‛]":    "'",
-        r"[""„‟]":    '"',
-        r"[‐‑‒–—―−]": "-",
-        r"…":          "...",
+        r"[''‚‛]": "'",
+        r'[""„‟]': '"',
+        r"[‐-‒–—―−]": "-",
+        r"…": "...",
     }
     for pattern, repl in replacements.items():
         text = re.sub(pattern, repl, text)
@@ -43,8 +43,23 @@ def clean_text(text, replace_num=True,
         text = re.sub(r'http\S+|www\S+', '<URL>', text)
     # 5. number replacement (2 passes)
     if replace_num:
-        text = re.sub(r'[£$€]?\d[\d,]*\.?\d*', '<NUM>', text)
-        text = re.sub(r'(?<![a-zA-Z])\d+(?![a-zA-Z])', '<NUM>', text)
+        # Phone numbers
+        text = re.sub(r"(?<![A-Za-z])\+?\d[\d\s().-]{6,}\d(?![A-Za-z])",
+                      "<NUM>", text, )
+        # Currency
+        text = re.sub(r"(?<![A-Za-z])" r"[£$€]\s*\d+(?:,\d{3})*(?:\.\d+)?"
+                      r"(?![A-Za-z])", "<NUM>", text, )
+        # Ordinals MUST be handled before ordinary numbers.
+        text = re.sub(r"(?<![A-Za-z])" r"\d+(?:st|nd|rd|th)" r"(?![A-Za-z])",
+                      "<NUM>", text, flags=re.IGNORECASE, )
+        # Decimal numbers
+        text = re.sub(r"(?<![A-Za-z])" r"\d+(?:,\d{3})*(?:\.\d+)"
+                      r"(?![A-Za-z])", "<NUM>", text, )
+        # Numbers with commas
+        text = re.sub(r"(?<![A-Za-z])" r"\d{1,3}(?:,\d{3})+"
+                      r"(?![A-Za-z])", "<NUM>", text, )
+        # Remaining standalone numbers.
+        text = re.sub(r"(?<![A-Za-z])\d+(?![A-Za-z])", "<NUM>", text, )
     # 6. emoji handling
     if emoji_action == "replace":
         text = emoji.replace_emoji(text, replace='<EMO>')
