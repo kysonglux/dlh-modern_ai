@@ -43,13 +43,13 @@ def clean_text(text, replace_num=True,
         text = re.sub(r'http\S+|www\S+', '<URL>', text)
     # 5. number replacement (2 passes)
     if replace_num:
-        text = re.sub(r'\d+\.\d+', '<NUM>', text)
-        text = re.sub(r'\d+', '<NUM>', text)
+        text = re.sub(r'[£$€]?\d[\d,]*\.?\d*', '<NUM>', text)
+        text = re.sub(r'(?<![a-zA-Z])\d+(?![a-zA-Z])', '<NUM>', text)
     # 6. emoji handling
     if emoji_action == "replace":
-        text = emoji.emojize(text, language='en')
+        text = emoji.replace_emoji(text, replace='<EMO>')
     elif emoji_action == "remove":
-        text = emoji.demojize(text)
+        text = emoji.replace_emoji(text, replace='')
     # 7. collapse repeated ! / ?
     text = re.sub(r'([!?])\1+', r'\1', text)
     # 8. collapse whitespace
