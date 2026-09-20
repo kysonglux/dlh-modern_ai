@@ -27,7 +27,10 @@ def normalize_unicode_punct(text):
 
 def clean_text(text, replace_num=True,
                replace_url=True, emoji_action="replace"):
+    """Clean text for NLP tasks."""
     # 1. lowercase + strip
+    if not text:
+        return ''
     text = text.lower().strip()
     # 2. dataset placeholders
     for old, new in _DATASET_PLACEHOLDER_MAP.items():
@@ -39,8 +42,8 @@ def clean_text(text, replace_num=True,
         text = re.sub(r'http\S+|www\S+', '<URL>', text)
     # 5. number replacement (2 passes)
     if replace_num:
-        text = re.sub(r'\d+', '<NUM>', text)
         text = re.sub(r'\d+\.\d+', '<NUM>', text)
+        text = re.sub(r'\d+', '<NUM>', text)
     # 6. emoji handling
     if emoji_action == "replace":
         text = emoji.emojize(text, language='en')
