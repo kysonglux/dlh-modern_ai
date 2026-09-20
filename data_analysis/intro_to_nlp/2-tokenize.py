@@ -39,7 +39,14 @@ def tokenize_text(text, method="tweet"):
         return []
 
     if method == "tweet":
-        return nltk.word_tokenize(text)
+        tokenizer = nltk.TweetTokenizer(
+            preserve_case=True,
+            reduce_len=True,
+            strip_handles=False, )
+        tokens = tokenizer.tokenize(text)
+        tokens = [ "" if token.upper() in {"<URL>", "<NUM>"} 
+                  else token for token in tokens ] 
+        return tokens
     elif method == "word":
         return text.split()
     elif method == "split":
