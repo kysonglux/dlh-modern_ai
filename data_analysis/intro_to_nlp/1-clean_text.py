@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""clean_text.py — Clean text for NLP tasks."""
 import re
 import emoji
 
