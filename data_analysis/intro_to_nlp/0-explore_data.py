@@ -6,6 +6,8 @@ import seaborn as sns
 
 def explore_data(df):
     """initial dataset exploration"""
+    df["msg_length"] = df["message"].apply(len)
+
     fig, axes = plt.subplots(1, 2, figsize=(12, 4))
     label_counts = df['label'].value_counts().reset_index()
     label_counts.columns = ['label', 'count']
