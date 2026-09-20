@@ -29,7 +29,7 @@ def clean_text(text, replace_num=True,
                replace_url=True, emoji_action="replace"):
     """Clean text for NLP tasks."""
     # 1. lowercase + strip
-    if not text:
+    if not isinstance(text, str):
         return ''
     text = text.lower().strip()
     # 2. dataset placeholders
