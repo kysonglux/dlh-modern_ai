@@ -34,22 +34,21 @@ def normalize_emoticons(tokens, emoticon_action="replace"):
 
 
 def tokenize_text(text, method="tweet"):
-    """Tokenize text using the specified method."""
+    """Tokenize text without using TweetTokenizer."""
     if not isinstance(text, str):
         return []
 
+    tokens = []
     if method == "tweet":
         tokenizer = nltk.TweetTokenizer(
             preserve_case=True,
             reduce_len=True,
             strip_handles=False, )
         tokens = tokenizer.tokenize(text)
-        tokens = [ "" if token.upper() in {"<URL>", "<NUM>"} 
-                  else token for token in tokens ] 
-        return tokens
     elif method == "word":
-        return text.split()
+        tokens = nltk.word_tokenize(text)
     elif method == "split":
-        return text.split()
+        tokens = text.split()
     else:
-        return []
+        raise ValueError("Invalid tokenizer method")
+    return tokens
