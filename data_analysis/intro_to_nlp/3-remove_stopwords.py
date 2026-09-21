@@ -12,10 +12,11 @@ def remove_stopwords(tokens, language='english',
     if not tokens:
         return []
 
-    stop_words = set(nltk.corpus.stopwords.words(language))
+    stop_words = {w.lower() for w in nltk.corpus.stopwords.words(language)}
     if extra_words:
-        stop_words.update(extra_words)
+        stop_words.update(w.lower() for w in extra_words)
     if keep_words:
-        stop_words.difference_update(keep_words)
+        stop_words.difference_update(w.lower() for w in keep_words)
 
-    return [t for t in tokens if t not in stop_words]
+    return [t for t in tokens
+            if not isinstance(t, str) or t.lower() not in stop_words]
