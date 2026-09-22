@@ -18,8 +18,8 @@ def normalize_unicode_punct(text):
     replacements = {
         "'": "’",      # apostrophe → right single quote
         '"': "“",      # double quote → left double quote (simple heuristic)
-        "-": "–",      # dash → en dash
-        r"\.\.\.": "…"
+        "-": "-",      # dash → en dash
+        r"\.\.\.": "..."
     }
     for pattern, repl in replacements.items():
         text = re.sub(pattern, repl, text)
