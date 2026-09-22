@@ -55,6 +55,8 @@ def clean_text(text, replace_num=True,
         text = emoji.replace_emoji(text, replace='<EMO>')
     elif emoji_action == "remove":
         text = emoji.replace_emoji(text, replace='')
+    elif emoji_action == "keep":
+        pass
     # 7. collapse repeated ! / ?
     text = re.sub(r'([!?])\1+', r'\1', text)
     # 8. collapse whitespace
