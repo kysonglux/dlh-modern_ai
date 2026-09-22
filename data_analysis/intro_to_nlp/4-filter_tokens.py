@@ -15,6 +15,8 @@ def filter_tokens(tokens, min_len=2, strip_hashtag=False):
         if _PLACEHOLDER_RE.match(t):
             filtered.append(t)
             continue
+        if t.startswith('<') and not _PLACEHOLDER_RE.match(t):
+            continue
         if t.isdigit():
             continue
         if t.isascii() and all(ch in "!?." for ch in t):
