@@ -48,8 +48,6 @@ def clean_text(text, replace_num=True,
         # integers, decimas, currency
         text = re.sub(r'(?:£|\$|€)\d+(?:[.,]\d+)*|(?<!<)\b\d+(?:[.,]\d+)*\b',
                       "<NUM>", text)
-        # emoticons
-        text = re.sub(r'(?<![A-Za-z])\d+(?![A-Za-z])', "<NUM>", text)
     # 6. emoji handling
     if emoji_action == "replace":
         text = emoji.replace_emoji(text, replace='<EMO>')
