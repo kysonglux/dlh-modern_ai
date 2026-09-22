@@ -3,7 +3,7 @@
 import re
 
 
-def filter_tokens(tokens, min_len=2, strip_hashtags=False):
+def filter_tokens(tokens, min_len=2, strip_hashtag=False):
     """Filter tokens based on certain criteria."""
     _PLACEHOLDER_RE = re.compile(r'^<[A-Za-z]+>$')
     if not isinstance(tokens, list) or not tokens:
@@ -21,7 +21,7 @@ def filter_tokens(tokens, min_len=2, strip_hashtags=False):
             continue
         if min_len is not None and len(t) < min_len:
             continue
-        if strip_hashtags:
+        if strip_hashtag:
             t = t.lstrip('#')
         filtered.append(t)
     return filtered
