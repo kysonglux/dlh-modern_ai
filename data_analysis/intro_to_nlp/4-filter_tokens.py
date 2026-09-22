@@ -19,6 +19,8 @@ def filter_tokens(tokens, min_len=2, strip_hashtag=False):
             continue
         if t.isascii() and all(ch in "!?." for ch in t):
             continue
+        if strip_hashtag:
+            t = t.lstrip('#')
         if min_len is not None and len(t) < min_len:
             continue
         if strip_hashtag:
