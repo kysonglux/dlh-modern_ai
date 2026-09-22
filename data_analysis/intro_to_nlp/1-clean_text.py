@@ -16,10 +16,10 @@ _DATASET_PLACEHOLDER_MAP = {
 def normalize_unicode_punct(text):
     """Replace curly quotes, dashes, ellipses, etc. with ASCII equivalents."""
     replacements = {
-        "'": "’",      # apostrophe → right single quote
-        '"': "“",      # double quote → left double quote (simple heuristic)
-        "-": "-",      # dash → en dash
-        r"\.\.\.": "..."
+        r"[''‚‛]":    "'",
+        r"[""„‟]":    '"',
+        r"[‐‑‒–—―−]": "-",
+        r"…":          "...",
     }
     for pattern, repl in replacements.items():
         text = re.sub(pattern, repl, text)
