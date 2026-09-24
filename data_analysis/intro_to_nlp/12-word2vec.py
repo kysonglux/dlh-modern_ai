@@ -37,7 +37,7 @@ def word2vec_embeddings(corpus_tokens, vector_size=100,
         token_vectors = [model.wv[token]
                          for token in tokens if token in model.wv]
         if token_vectors:
-            message_embedding = np.mean(token_vectors, axis=0)
+            message_embedding = np.mean(token_vectors, axis=0).astype(np.float64)
             embeddings.append(message_embedding)
         elif not token_vectors:
             ignore_message = True
