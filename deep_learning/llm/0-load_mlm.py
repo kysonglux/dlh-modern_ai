@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Load a pre-trained Masked Language Model (MLM)."""
-from transformers import RobertaForMaskedLM
+import transformers
 
 
 def load_mlm(model_name):
@@ -10,6 +10,6 @@ def load_mlm(model_name):
     if not isinstance(model_name, str) or not model_name:
         raise ValueError("model_name must be a non-empty string.")
 
-    model = RobertaForMaskedLM.from_pretrained(model_name)
+    model = transformers.RobertaForMaskedLM.from_pretrained(model_name)
 
     return model
