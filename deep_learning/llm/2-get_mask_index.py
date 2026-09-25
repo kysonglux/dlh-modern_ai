@@ -21,5 +21,7 @@ def get_mask_index(inputs, tokenizer):
                 .tolist()
                 )
         mask_indices.append(indices)
+    if not any(mask_indices):
+        raise ValueError("No <mask> token found in the input!")
 
     return mask_indices
