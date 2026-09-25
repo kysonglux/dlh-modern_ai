@@ -8,8 +8,13 @@ def decode_mask_predictions(mask_logits_list, tokenizer):
 
     decoded_tokens = []
     for mask_logits in mask_logits_list:
-        top_indexs = mask_logits.argmax(dim=-1).item()
-        tokens = tokenizer.decode([top_indexs]).strip()
+        vocab_size = mask_logits.shape[-1]
+        token_ids = list(range(vocab_size))
+        raw_tokens = tokenizer.convert_ids_to_tokens(token_ids)
+        tokens = [
+            tokenizer.convert_tokens_to_string([raw_token]).strip()
+            for raw_token in raw_tokens
+        ]
         decoded_tokens.append(tokens)
 
     return decoded_tokens
