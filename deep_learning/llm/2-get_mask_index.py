@@ -12,6 +12,7 @@ def get_mask_index(inputs, tokenizer):
         raise ValueError("No <mask> token found in the input!")
 
     mask_token_id = tokenizer.mask_token_id
+    input_ids = inputs['input_ids'][0]
     mask_indices = []
 
     for input_ids in inputs['input_ids']:
