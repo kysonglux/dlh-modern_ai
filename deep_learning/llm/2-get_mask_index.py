@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """returns the positions of all <mask> tokens"""
-import transformers
 
 
 def get_mask_index(inputs, tokenizer):
