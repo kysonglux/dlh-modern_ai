@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """creates a high-level interface for performing Masked language Modeling
 using a pre-trained large language model"""
-from transformers import pipeline
+import transformers
 
 
 def fill_mask(model_name, top_k):
@@ -12,7 +12,7 @@ def fill_mask(model_name, top_k):
     if not isinstance(top_k, int) or top_k <= 0:
         raise ValueError("top_k must be a positive integer.")
 
-    fill = pipeline(
+    fill = transformers.pipeline(
         "fill-mask",
         model=model_name,
         tokenizer=model_name
