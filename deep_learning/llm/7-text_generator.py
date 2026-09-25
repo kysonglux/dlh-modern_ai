@@ -22,14 +22,17 @@ def create_text_generator(model_name, prompt, max_new_tokens,
     if not isinstance(no_repeat_ngram_size, int) or no_repeat_ngram_size < 0:
         raise ValueError(" must be a non-negative integer.")
 
+    tokenizer = transformers.AutoTokenizer.from_pretrained(model_name)
+
     generator = transformers.pipeline(
         "text-generation",
         model=model_name,
-        tokenizer=model_name,
+        tokenizer=tokenizer,
         max_new_tokens=max_new_tokens,
         temperature=temperature,
         repetition_penalty=repetition_penalty,
-        no_repeat_ngram_size=no_repeat_ngram_size
+        no_repeat_ngram_size=no_repeat_ngram_size,
+        pad_token_id=tokenizer.eos_token_id,
     )
-    output = generator(prompt, return_full_text=False)
+    output = generator(prompt, return_full_text=True)
     return generator, output
