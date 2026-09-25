@@ -15,6 +15,7 @@ def fill_mask(model_name, top_k):
     fill = transformers.pipeline(
         "fill-mask",
         model=model_name,
-        tokenizer=model_name
+        tokenizer=model_name,
+        top_k=top_k
     )
     return fill
