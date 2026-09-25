@@ -5,24 +5,17 @@
 def get_mask_index(inputs, tokenizer):
     """Get the positions of all <mask> tokens in the input tensor.
     """
-    if not hasattr(inputs, '__contains__') or 'input_ids' not in inputs:
-        raise ValueError("inputs must be a dictionary containing 'input_ids'.")
-    if (not hasattr(tokenizer, 'mask_token_id')
-            or tokenizer.mask_token_id is None):
-        raise ValueError("No <mask> token found in the input!")
 
     mask_token_id = tokenizer.mask_token_id
     input_ids = inputs['input_ids'][0]
-    mask_indices = []
 
-    for input_ids in inputs['input_ids']:
-        indices = (
+    mask_indices = (
                 (input_ids == mask_token_id)
                 .nonzero(as_tuple=True)[0]
                 .tolist()
                 )
-        mask_indices.append(indices)
-    if not any(mask_indices):
+
+    if not mask_indices:
         raise ValueError("No <mask> token found in the input!")
 
     return mask_indices
