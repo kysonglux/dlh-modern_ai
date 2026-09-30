@@ -2,7 +2,7 @@
 """generates a textual description of a given image
 using a pre-trained BLIP model and a pre-trained language model (LLM)"""
 import transformers
-from PIL import Image
+import PIL
 
 
 def image_captioner(model, image_path, max_new_tokens):
@@ -14,7 +14,7 @@ def image_captioner(model, image_path, max_new_tokens):
                 transformers.BlipForConditionalGeneration.
                 from_pretrained(model))
 
-    raw_image = Image.open(image_path).convert('RGB')
+    raw_image = PIL.Image.open(image_path).convert('RGB')
 
     inputs = processor(raw_image, return_tensors="pt")
 
