@@ -16,4 +16,4 @@ def load_emotion_dataset():
     validation = dataset['validation']
     test = dataset['test']
 
-    return train, validation, test
+    return dataset, train, validation, test
