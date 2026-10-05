@@ -9,12 +9,12 @@ def load_distilbert(model_name, num_classes, id2label, label2id):
     """
 
     # Load the tokenizer
-    tokenizer = transformers.DistilBertTokenizer.from_pretrained(model_name)
+    tokenizer = transformers.AutoTokenizer.from_pretrained(model_name)
 
     # Load the sequence classification model
-    model = transformers.DistilBertForSequenceClassification.from_pretrained(
+    model = transformers.AutoModelForSequenceClassification.from_pretrained(
         model_name, num_labels=num_classes,
         id2label=id2label, label2id=label2id
     )
 
-    return (tokenizer, model)
+    return tokenizer, model
