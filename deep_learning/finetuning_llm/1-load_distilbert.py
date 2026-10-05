@@ -17,4 +17,4 @@ def load_distilbert(model_name, num_classes, id2label, label2id):
         id2label=id2label, label2id=label2id
     )
 
-    return tokenizer, model
+    return (tokenizer, model)
