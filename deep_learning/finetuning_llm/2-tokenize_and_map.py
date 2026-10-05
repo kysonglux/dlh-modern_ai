@@ -15,4 +15,5 @@ def tokenize_and_map(dataset, tokenizer, max_length, truncation, batched):
 
     tokenized_datasets = dataset.map(tokenize_function, batched=batched)
 
-    return tokenized_datasets
+    return (tokenized_datasets["train"], tokenized_datasets["validation"],
+            tokenized_datasets["test"])
