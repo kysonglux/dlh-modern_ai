@@ -23,6 +23,7 @@ def configure_training_args(output_dir, epochs,
         save_strategy="epoch",
         load_best_model_at_end=True,
         greater_is_better=True,
+        push_to_hub=True
     )
 
     return training_args
