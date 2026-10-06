@@ -9,7 +9,6 @@ def tokenize_and_map(dataset, tokenizer, max_length, truncation, batched):
     def tokenize_function(examples):
         """tokenized function"""
         return tokenizer(examples["text"],
-                         padding="max_length",
                          truncation=truncation,
                          max_length=max_length)
 
