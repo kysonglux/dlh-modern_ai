@@ -21,6 +21,7 @@ def configure_training_args(output_dir, epochs,
         seed=seed,
         eval_strategy="epoch",
         save_strategy="epoch",
+        load_best_model_at_end=True
     )
 
     return training_args
