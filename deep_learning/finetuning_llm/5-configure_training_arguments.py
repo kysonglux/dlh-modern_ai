@@ -19,8 +19,9 @@ def configure_training_args(output_dir, epochs,
         weight_decay=weight_decay,
         metric_for_best_model=metric_for_best_model,
         seed=seed,
-        eval_strategy="epoch",
+        evaluation_strategy="epoch",
         save_strategy="epoch",
+        load_best_model_at_end=True,
     )
 
     return training_args
