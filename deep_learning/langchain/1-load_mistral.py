@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """initialize a mistral language model using langchain"""
-from langchain_mistralai import ChatMistralAI
+import langchain_mistralai
 
 
 def load_mistral(model_name, temperature):
     """initializes a mistral language model using langchain"""
 
-    llm = ChatMistralAI(
+    llm = langchain_mistralai.ChatMistralAI(
         model=model_name,
         temperature=temperature)
 
