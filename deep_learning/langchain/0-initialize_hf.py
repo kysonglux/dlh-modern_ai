@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """sets up a HF text to text generation model using langchain"""
 import transformers
-from langchain_community.llms import HuggingFacePipeline
+from langchain_community import llms
 
 
 def initialize_hf_llm(model_name, max_tokens):
@@ -13,7 +13,7 @@ def initialize_hf_llm(model_name, max_tokens):
             model=model_name)
 
     # Wrap the pipeline in a HuggingFacePipeline object for use with LangChain
-    llm = HuggingFacePipeline(pipeline=text_gen_pipeline,
-                              model_kwargs={"max_length": max_tokens})
+    llm = llms.HuggingFacePipeline(pipeline=text_gen_pipeline,
+                                   model_kwargs={"max_length": max_tokens})
 
     return llm
