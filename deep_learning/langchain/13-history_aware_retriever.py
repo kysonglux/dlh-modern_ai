@@ -2,7 +2,7 @@
 """generates a serach query based on the conversation history
 and the user's current input to retrieve the most relevant documents"""
 from lanchiain_core import prompts
-from langchain.chains import create_history_aware_retriever
+from langchain.chains import chains
 
 
 def build_history_aware_retriever(llm, retriever, human_message):
@@ -22,7 +22,7 @@ def build_history_aware_retriever(llm, retriever, human_message):
         ("human", human_message)
     ])
 
-    history_aware_retriever = create_history_aware_retriever(
+    history_aware_retriever = chains.create_history_aware_retriever(
         llm=llm,
         retriever=retriever,
         prompt=prompt
