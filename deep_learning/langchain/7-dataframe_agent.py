@@ -15,9 +15,12 @@ def create_dataframe_agent(llm, df):
         A Pandas DataFrame Agent.
     """
 
-    return create_pandas_dataframe_agent(
+    agent = create_pandas_dataframe_agent(
         llm,
         df,
         verbose=True,
         allow_dangerous_code=True,
-        agent_executor_kwargs={"return_intermediate_steps": True})
+        agent_executor_kwargs={"return_intermediate_steps": True}
+    )
+    agent.handle_parsing_errors = True
+    return agent
