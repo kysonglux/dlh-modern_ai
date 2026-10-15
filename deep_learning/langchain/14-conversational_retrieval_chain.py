@@ -2,7 +2,7 @@
 """builds a retrieval chain capable of answering user queries
 by fetching relevant docuemtns while incorporating prior
 conversation history"""
-from langchain_classic import chains
+from langchain import chains
 
 
 def create_conversational_retrieval_chain(
