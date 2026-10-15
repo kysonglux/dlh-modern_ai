@@ -25,6 +25,6 @@ def create_conversational_retrieval_chain(
         retriever=history_aware_retriever,
         combine_docs_chain=document_chain,
         return_source_documents=True
-    )
+    ).with_config({"run_name": "retrieval_chain"})
 
     return conversational_retrieval_chain
