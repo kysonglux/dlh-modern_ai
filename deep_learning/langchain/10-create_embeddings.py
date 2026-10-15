@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """loads a HF embedding model using LangChain"""
-from langchain.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 
 
 def create_embeddings(model_name):
