@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """sets up a Pandas DataFrame Agent using LangChain LLMs"""
-from langchain_experimental import agents
+from langchain_experimental.agents.agent_toolkits import (
+    create_pandas_dataframe_agent)
 
 
 def create_dataframe_agent(llm, df):
@@ -14,7 +15,7 @@ def create_dataframe_agent(llm, df):
         A Pandas DataFrame Agent.
     """
 
-    return agents.agent_toolkits.create_pandas_dataframe_agent(
+    return create_pandas_dataframe_agent(
         llm,
         df,
         verbose=True,
