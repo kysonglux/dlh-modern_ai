@@ -15,9 +15,9 @@ def split_into_chunks(docs, chunk_size, chunk_overlap):
         A list of document chunks.
     """
 
-    text_splitter = text_splitter.RecursiveCharacterTextSplitter(
+    splitter = text_splitter.RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap
     )
-    list = text_splitter.split_documents(docs)
+    list = splitter.split_documents(docs)
     return list
