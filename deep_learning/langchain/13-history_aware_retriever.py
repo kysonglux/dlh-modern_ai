@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """generates a serach query based on the conversation history
 and the user's current input to retrieve the most relevant documents"""
-from lanchiain_core import prompts
-from langchain.chains import chains
+from langchain_core import prompts
+from langchain import chains
 
 
 def build_history_aware_retriever(llm, retriever, human_message):
