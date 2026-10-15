@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """combines multiple documents into coherent context and generates answers"""
-from langchain_core.prompts
+from langchain_core import prompts
 from langchain.chains import combine_documents
 
 
