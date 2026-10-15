@@ -14,8 +14,9 @@ def load_documents(folder_path, file_pattern):
         A list of loaded documents.
     """
 
-    loader = document_loaders.DirectoryLoader(folder_path,
-                             glob=file_pattern,
-                             loader_cls=document_loaders.TextLoader)
+    loader = (document_loaders.
+              DirectoryLoader(folder_path,
+                              glob=file_pattern,
+                              loader_cls=document_loaders.TextLoader))
     documents = loader.load()
     return documents
