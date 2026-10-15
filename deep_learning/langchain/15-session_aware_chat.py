@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """wraps a conversational retrieval chain to support
 session-aware chat histories. """
-from langchain-core import RunnablewWithMessageHistory
+from langchain-core import runnables
 
 
 def create_session_aware_chat(retrieval_chain, get_session_history,
@@ -9,6 +9,6 @@ def create_session_aware_chat(retrieval_chain, get_session_history,
     """wraps a conversational retrieval chain to support
     session-aware chat histories.
     """
-    return (RunnablewWithMessageHistory(
+    return (runnables RunnablewWithMessageHistory(
             retrieval_chain,
             get_session_history, input_key, history_key, output_key))
