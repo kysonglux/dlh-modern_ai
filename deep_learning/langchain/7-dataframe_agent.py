@@ -19,8 +19,7 @@ def create_dataframe_agent(llm, df):
         llm,
         df,
         verbose=True,
-        allow_dangerous_code=True,
-        agent_executor_kwargs={"return_intermediate_steps": True}
+        allow_dangerous_code=True
     )
     agent.handle_parsing_errors = True
     return agent
