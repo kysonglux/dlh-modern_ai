@@ -21,9 +21,5 @@ def create_conversational_retrieval_chain(
         A conversational retrieval chain that can answer user queries
         based on relevant documents and prior conversation history.
     """
-    conversational_retrieval_chain = chains.ConversationalRetrievalChain(
-        retriever=history_aware_retriever,
-        combine_docs_chain=document_chain,
-    )
-
-    return conversational_retrieval_chain
+    return (chains.create_retrieval_chain(
+            history_aware_retriever, document_chain))
